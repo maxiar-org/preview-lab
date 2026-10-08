@@ -6,8 +6,12 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import psycopg
 import redis
 
-DB = os.environ["DATABASE_URL"]
-R = redis.Redis.from_url(os.environ["REDIS_URL"])
+# En las previews de Coolify los servicios se llaman <svc>-pr-N. Coolify inyecta SERVICE_NAME_<SVC>
+# en tiempo de ejecución; la interpolación del compose no los ve, así que se leen acá.
+PG_HOST = os.environ.get("SERVICE_NAME_POSTGRES", "postgres")
+REDIS_HOST = os.environ.get("SERVICE_NAME_REDIS", "redis")
+DB = f"postgresql://lab:lab@{PG_HOST}:5432/lab"
+R = redis.Redis(host=REDIS_HOST, port=6379)
 BRANCH = os.environ.get("BRANCH", "desconocida")
 
 
