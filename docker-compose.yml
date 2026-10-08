@@ -2,8 +2,9 @@ services:
   app:
     build: .
     environment:
-      DATABASE_URL: postgresql://lab:lab@postgres:5432/lab
-      REDIS_URL: redis://redis:6379/0
+      # En las previews Coolify renombra los servicios (postgres → postgres-pr-N): usar SERVICE_NAME_*.
+      DATABASE_URL: postgresql://lab:lab@${SERVICE_NAME_POSTGRES:-postgres}:5432/lab
+      REDIS_URL: redis://${SERVICE_NAME_REDIS:-redis}:6379/0
       BRANCH: ${COOLIFY_BRANCH:-local}
     depends_on: [postgres, redis]
     expose: ["8080"]
