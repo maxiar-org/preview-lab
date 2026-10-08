@@ -31,7 +31,7 @@ class H(BaseHTTPRequestHandler):
             c.execute("INSERT INTO visitas DEFAULT VALUES")
             total = c.execute("SELECT count(*) FROM visitas").fetchone()[0]
         R.incr("hits")
-        body = f"<h1>preview-lab</h1><p>Rama: <b>{BRANCH}</b></p><p>Visitas en esta base: <b>{total}</b></p><p>Redis: {int(R.get('hits'))}</p>"
+        body = f"<h1>preview-lab (PR de prueba)</h1><p>Rama: <b>{BRANCH}</b></p><p>Visitas en esta base: <b>{total}</b></p><p>Redis: {int(R.get('hits'))}</p>"
         self.send_response(200); self.send_header("Content-Type", "text/html; charset=utf-8"); self.end_headers()
         self.wfile.write(body.encode())
 
